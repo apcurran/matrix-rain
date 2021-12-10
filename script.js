@@ -47,6 +47,13 @@ class RainEffect {
         }
     }
     // Public method
+    resize(width, height) {
+        this.canvasWidth = width;
+        this.canvasHeight = height;
+        this.columns = this.canvasWidth / this.fontSize;
+        this.symbols = [];
+        this.#init();
+    }
 }
 
 const effect = new RainEffect(canvas.width, canvas.height);
@@ -82,7 +89,7 @@ function animate(timestamp = 0) {
 // Kick off
 animate();
 
-// Util func
+// Util funcs
 /**
  * @param {number} charsLen 
  * @returns {number}
@@ -91,16 +98,10 @@ function getRandomInt(charsLen) {
     return Math.floor(Math.random() * charsLen);
 }
 
-
-
-
-
-
-
-
-window.addEventListener("resize", resizeCanvas);
-
 function resizeCanvas() {
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
+    effect.resize(canvas.width, canvas.height);
 }
+
+window.addEventListener("resize", resizeCanvas);
