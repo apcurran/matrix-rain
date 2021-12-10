@@ -50,15 +50,29 @@ class RainEffect {
 }
 
 const effect = new RainEffect(canvas.width, canvas.height);
+// Adjust fps
+const fps = 30;
+const nextFrame = 1000 / fps;
+let lastTime = 0;
+let timer = 0;
 
-function animate() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = `${effect.fontSize}px monospace`;
-    ctx.fillStyle = "#0aff0a";
+function animate(timestamp = 0) {
+    const deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
 
-    for (let symbol of effect.symbols) {
-        symbol.draw(ctx);
+    if (timer > nextFrame) {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `${effect.fontSize}px monospace`;
+        ctx.fillStyle = "#0aff0a";
+    
+        for (let symbol of effect.symbols) {
+            symbol.draw(ctx);
+        }
+
+        timer = 0;
+    } else {
+        timer += deltaTime;
     }
 
     requestAnimationFrame(animate);
