@@ -51,7 +51,7 @@ class RainEffect {
 
 const effect = new RainEffect(canvas.width, canvas.height);
 // Adjust fps
-const fps = 30;
+const fps = 60;
 const nextFrame = 1000 / fps;
 let lastTime = 0;
 let timer = 0;
@@ -62,6 +62,7 @@ function animate(timestamp = 0) {
 
     if (timer > nextFrame) {
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.textAlign = "center";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.font = `${effect.fontSize}px monospace`;
         ctx.fillStyle = "#0aff0a";
@@ -99,7 +100,7 @@ function getRandomInt(charsLen) {
 
 window.addEventListener("resize", resizeCanvas);
 
-function resizeCanvas(canvas) {
+function resizeCanvas() {
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
 }
